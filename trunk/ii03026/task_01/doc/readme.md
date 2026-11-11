@@ -186,9 +186,9 @@ exit /b 1
 ```
 ### Демонстрация исполняемого файла ii03023_lab1.exe:
 
-![](console_input1.jpg)
-
 ![](console_input2.jpg)
+
+![](console_input1.jpg)
 
 ### Примеры графиков переходных процессов
 
