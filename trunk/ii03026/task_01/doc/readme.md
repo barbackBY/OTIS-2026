@@ -187,23 +187,20 @@ exit /b 1
 
 ### Демонстрация исполняемого файла ii03023_lab1.exe:
 
-![](img/console.png)
+![](console_input1.jpg)
 
-![](img/console2.png)
+![](console_input2.jpg)
 
 ### Примеры графиков переходных процессов
 
 **Демонстрация Model 1.1 (линейная):**
-![](img/model_1_1.png)
+![](plot1.png)
 
 **Демонстрация Model 2.3 (нелинейная):**
-![](img/model_2_3.png)
+![](plo2.png)
 
 **Демонстрация Model 3.5 (дифференциальное уравнение):**
-![](img/model_3_5.png)
-
-**Сводный график:**
-![](img/plot.png)
+![](plot3.png)
 
 
 
