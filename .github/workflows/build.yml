@@ -19,11 +19,11 @@ jobs:
           allow-unsafe-pr-checkout: true
       - name: Install Build Wrapper
         uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v5
-      - name: Run Build Wrapper
-        run: |
-          mkdir build
-          cmake -S trunk/ii03026/task_01/src -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build
+      - - name: Run Build Wrapper
+      - run: |
+      - mkdir build
+      - cmake -S trunk/ii03026/task_01/src -B build -DCMAKE_POLICY_DEFAULT_CMP0000=OLD
+      - build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
