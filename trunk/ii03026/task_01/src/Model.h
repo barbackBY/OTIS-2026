@@ -3,8 +3,8 @@
 
 class Model {
 public:
-    virtual double calculateNextStep(double u, double y_prev) = 0;
     virtual ~Model() = default;
+    virtual double calculateNextStep(double u, double y_prev) = 0;
 };
 
-#endif // MODEL_H
+#endif

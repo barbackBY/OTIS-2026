@@ -3,11 +3,4 @@ project(untitled7)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled7
-        main.cpp
-        Model.h
-        Models.h
-        Models.cpp
-        Utils.h
-        Utils.cpp
-)
+add_executable(untitled7 main.cpp Model.h models.h Models.cpp Utils.h Utils.cpp)
