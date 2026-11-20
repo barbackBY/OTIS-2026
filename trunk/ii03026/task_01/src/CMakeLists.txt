@@ -1,6 +1,17 @@
-cmake_minimum_required(VERSION 3.5)
-project(untitled7)
+cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_CXX_STANDARD 17)
+project(ii03026_task_01 LANGUAGES CXX)
 
-add_executable(untitled7 main.cpp Model.h models.h Models.cpp Utils.h Utils.cpp)
+add_executable(ii03026_task_01
+        main.cpp
+        Models.cpp
+        Utils.cpp
+)
+
+target_include_directories(ii03026_task_01 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+set_target_properties(ii03026_task_01 PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF
+)
