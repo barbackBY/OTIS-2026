@@ -21,17 +21,17 @@ bool LinearModel1_1::isStable() const {
 
 void LinearModel1_1::printStabilityInfo() const {
     std::cout << std::fixed << std::setprecision(4);
-    std::cout << "=== Анализ устойчивости: Линейная модель (1-го порядка) ===\n";
-    std::cout << "Характеристическое уравнение: z - a = 0\n";
-    std::cout << "Корень: z = " << a << "\n";
-    std::cout << "Модуль корня: |z| = " << std::abs(a) << "\n";
-    std::cout << "Критерий устойчивости: |a| < 1\n";
+    std::cout << "=== Stability Analysis: Linear Model (1st Order) ===\n";
+    std::cout << "Characteristic equation: z - a = 0\n";
+    std::cout << "Root: z = " << a << "\n";
+    std::cout << "Root magnitude: |z| = " << std::abs(a) << "\n";
+    std::cout << "Stability criterion: |a| < 1\n";
     if (isStable()) {
-        std::cout << "Результат: УСТОЙЧИВАЯ (|a| = " << std::abs(a) << " < 1)\n";
+        std::cout << "Result: STABLE (|a| = " << std::abs(a) << " < 1)\n";
     } else {
-        std::cout << "Результат: НЕУСТОЙЧИВАЯ (|a| = " << std::abs(a) << " >= 1) - ПРЕДУПРЕЖДЕНИЕ!\n";
+        std::cout << "Result: UNSTABLE (|a| = " << std::abs(a) << " >= 1) - WARNING!\n";
     }
-    std::cout << "==========================================================\n";
+    std::cout << "======================================================\n";
 }
 
 // --- Нелинейная модель (с зоной нечувствительности) ---
@@ -56,19 +56,19 @@ bool NonLinearModel2_3::isStable() const {
 
 void NonLinearModel2_3::printStabilityInfo() const {
     std::cout << std::fixed << std::setprecision(4);
-    std::cout << "=== Анализ устойчивости: Нелинейная модель (зона нечувствительности) ===\n";
-    std::cout << "Линеаризованная модель: y(k) = a * y(k-1) + b * u(k)\n";
-    std::cout << "Характеристическое уравнение: z - a = 0\n";
-    std::cout << "Корень: z = " << a << "\n";
-    std::cout << "Модуль корня: |z| = " << std::abs(a) << "\n";
-    std::cout << "Параметр зоны нечувствительности: delta = " << delta << "\n";
-    std::cout << "Критерий устойчивости: |a| < 1\n";
+    std::cout << "=== Stability Analysis: Nonlinear Model (Deadzone) ===\n";
+    std::cout << "Linearized model: y(k) = a * y(k-1) + b * u(k)\n";
+    std::cout << "Characteristic equation: z - a = 0\n";
+    std::cout << "Root: z = " << a << "\n";
+    std::cout << "Root magnitude: |z| = " << std::abs(a) << "\n";
+    std::cout << "Deadzone parameter: delta = " << delta << "\n";
+    std::cout << "Stability criterion: |a| < 1\n";
     if (isStable()) {
-        std::cout << "Результат: УСТОЙЧИВАЯ (|a| = " << std::abs(a) << " < 1)\n";
+        std::cout << "Result: STABLE (|a| = " << std::abs(a) << " < 1)\n";
     } else {
-        std::cout << "Результат: НЕУСТОЙЧИВАЯ (|a| = " << std::abs(a) << " >= 1) - ПРЕДУПРЕЖДЕНИЕ!\n";
+        std::cout << "Result: UNSTABLE (|a| = " << std::abs(a) << " >= 1) - WARNING!\n";
     }
-    std::cout << "=================================================================\n";
+    std::cout << "====================================================\n";
 }
 
 // --- Модель дифференциального уравнения (2-го порядка) ---
@@ -129,12 +129,12 @@ bool DifferentialModel::isStable() const {
 
 void DifferentialModel::printStabilityInfo() const {
     std::cout << std::fixed << std::setprecision(4);
-    std::cout << "=== Анализ устойчивости: Дифференциальная модель (2-го порядка) ===\n";
-    std::cout << "Разностное уравнение: y(k) = a1*y(k-1) + a2*y(k-2) + b0*u(k)\n";
-    std::cout << "Характеристическое уравнение: z^2 - a1*z - a2 = 0\n";
+    std::cout << "=== Stability Analysis: Differential Model (2nd Order) ===\n";
+    std::cout << "Difference equation: y(k) = a1*y(k-1) + a2*y(k-2) + b0*u(k)\n";
+    std::cout << "Characteristic equation: z^2 - a1*z - a2 = 0\n";
 
     auto roots = getCharacteristicRoots();
-    std::cout << "Корни:\n";
+    std::cout << "Roots:\n";
     for (size_t i = 0; i < roots.size(); ++i) {
         std::cout << "  z" << (i + 1) << " = " << roots[i].real();
         if (roots[i].imag() >= 0) std::cout << " + ";
@@ -143,15 +143,15 @@ void DifferentialModel::printStabilityInfo() const {
         std::cout << "  |z" << (i + 1) << "| = " << std::abs(roots[i]) << "\n";
     }
 
-    std::cout << "Коэффициенты: a1 = " << a1 << ", a2 = " << a2 << "\n";
-    std::cout << "Критерий Юра:\n";
-    std::cout << "  1) |a2| < 1:  |" << a2 << "| = " << std::abs(a2) << " " << (std::abs(a2) < 1.0 ? "✓" : "✗") << "\n";
-    std::cout << "  2) |a1| < 1 + a2:  |" << a1 << "| = " << std::abs(a1) << " < " << (1 + a2) << " " << (std::abs(a1) < 1 + a2 ? "✓" : "✗") << "\n";
+    std::cout << "Coefficients: a1 = " << a1 << ", a2 = " << a2 << "\n";
+    std::cout << "Jury criterion:\n";
+    std::cout << "  1) |a2| < 1:  |" << a2 << "| = " << std::abs(a2) << " " << (std::abs(a2) < 1.0 ? "OK" : "FAIL") << "\n";
+    std::cout << "  2) |a1| < 1 + a2:  |" << a1 << "| = " << std::abs(a1) << " < " << (1 + a2) << " " << (std::abs(a1) < 1 + a2 ? "OK" : "FAIL") << "\n";
 
     if (isStable()) {
-        std::cout << "Результат: УСТОЙЧИВАЯ (все корни внутри единичного круга)\n";
+        std::cout << "Result: STABLE (all roots inside unit circle)\n";
     } else {
-        std::cout << "Результат: НЕУСТОЙЧИВАЯ (хотя бы один корень вне единичного круга) - ПРЕДУПРЕЖДЕНИЕ!\n";
+        std::cout << "Result: UNSTABLE (at least one root outside unit circle) - WARNING!\n";
     }
-    std::cout << "==================================================================\n";
+    std::cout << "========================================================\n";
 }

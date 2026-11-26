@@ -1,80 +1,36 @@
+#include <iomanip>
 #include <iostream>
 #include <memory>
+#include <utility>
+#include <vector>
 #include "Models.h"
-#include "Utils.h"
+
+void simulateModel(const std::string& title, Model& model, double u, int steps) {
+    std::cout << "=== " << title << " ===\n";
+    model.printStabilityInfo();
+    std::cout << "Stability: " << (model.isStable() ? "YES" : "NO") << "\n";
+
+    double y = 0.0;
+    std::cout << std::fixed << std::setprecision(4);
+    for (int k = 1; k <= steps; ++k) {
+        y = model.calculateNextStep(u, y);
+        std::cout << "Step " << std::setw(2) << k << ": y = " << y << "\n";
+    }
+    std::cout << "\n";
+}
 
 int main() {
-    int modelChoice, inputChoice, steps;
-    double a, b, a2 = 0.0, delta = 0.0, customU = 0.0;
+    std::vector<std::pair<std::string, std::unique_ptr<Model>>> models;
+    models.emplace_back("First-order linear model", std::make_unique<LinearModel1_1>(0.8, 0.2));
+    models.emplace_back("Nonlinear model (deadzone)", std::make_unique<NonLinearModel2_3>(0.7, 0.3, 0.2));
+    models.emplace_back("Second-order differential model", std::make_unique<DifferentialModel>(0.5, 0.2, 0.3));
 
-    std::cout << "=== ЛАБОРАТОРНАЯ РАБОТА: МОДЕЛИРОВАНИЕ СИСТЕМ (с анализом устойчивости) ===\n";
+    const double inputSignal = 1.0;
+    const int simulationSteps = 10;
 
-    // 1. Выбор модели
-    std::cout << "\nВыберите модель:\n";
-    std::cout << "1. Линейная модель (1-го порядка)\n";
-    std::cout << "2. Нелинейная модель (с зоной нечувствительности)\n";
-    std::cout << "3. Модель на основе дифференциального уравнения (2-го порядка)\n";
-    std::cout << "Ваш выбор (1, 2 или 3): ";
-    std::cin >> modelChoice;
-
-    std::unique_ptr<Model> model = nullptr;
-
-    if (modelChoice == 1) {
-        std::cout << "Введите коэффициент a: ";
-        std::cin >> a;
-        std::cout << "Введите коэффициент b: ";
-        std::cin >> b;
-        model = std::make_unique<LinearModel1_1>(a, b);
-    }
-    else if (modelChoice == 2) {
-        std::cout << "Введите коэффициент a: ";
-        std::cin >> a;
-        std::cout << "Введите коэффициент b: ";
-        std::cin >> b;
-        std::cout << "Введите параметр зоны нечувствительности (delta): ";
-        std::cin >> delta;
-        model = std::make_unique<NonLinearModel2_3>(a, b, delta);
-    }
-    else if (modelChoice == 3) {
-        std::cout << "Введите коэффициент a1 (при y_prev1): ";
-        std::cin >> a;
-        std::cout << "Введите коэффициент a2 (при y_prev2): ";
-        std::cin >> a2;
-        std::cout << "Введите коэффициент b0 (при входе u): ";
-        std::cin >> b;
-        model = std::make_unique<DifferentialModel>(a, a2, b);
-    }
-    else {
-        std::cout << "Неверный выбор! По умолчанию используется линейная модель.\n";
-        std::cout << "Введите коэффициент a: ";
-        std::cin >> a;
-        std::cout << "Введите коэффициент b: ";
-        std::cin >> b;
-        model = std::make_unique<LinearModel1_1>(a, b);
+    for (auto& entry : models) {
+        simulateModel(entry.first, *entry.second, inputSignal, simulationSteps);
     }
 
-    // ПРОВЕРКА УСТОЙЧИВОСТИ перед симуляцией
-    checkStabilityAndWarn(*model);
-
-    // 2. Выбор типа воздействия
-    std::cout << "\nВыберите тип входного воздействия (u):\n";
-    std::cout << "1. Ступенчатое\n";
-    std::cout << "2. Импульсное\n";
-    std::cout << "3. Гармоническое (синусоида)\n";
-    std::cout << "Ваш выбор (1, 2 или 3): ";
-    std::cin >> inputChoice;
-
-    // 3. Ввод входного значения
-    std::cout << "Введите значение входного воздействия (например, 1.0, 5.0): ";
-    std::cin >> customU;
-
-    // 4. Количество шагов
-    std::cout << "Введите количество шагов симуляции (например, 30): ";
-    std::cin >> steps;
-
-    // 5. Запуск
-    runSimulation(*model, "simulation_result", steps, inputChoice, customU);
-
-    std::cout << "\nСимуляция успешно завершена!\n";
     return 0;
 }
