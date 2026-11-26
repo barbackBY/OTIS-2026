@@ -3,6 +3,7 @@
 
 #include "Model.h"
 #include <complex>
+#include <string>
 #include <vector>
 
 // 1. Линейная модель (1-го порядка): y(k) = a * y(k-1) + b * u(k)
@@ -74,5 +75,10 @@ public:
     // Получить корни характеристического уравнения
     std::vector<std::complex<double>> getCharacteristicRoots() const;
 };
+
+// Вспомогательные функции симуляции и проверки устойчивости (перенесены из Utils)
+void saveCSV(const std::string& filename, const std::vector<double>& steps, const std::vector<double>& outputs);
+void runSimulation(Model& model, const std::string& prefix, int n, int inputType, double customU);
+bool checkStabilityAndWarn(Model& model);
 
 #endif
